@@ -12,6 +12,14 @@ public class Player_Character : MonoBehaviour
     int NumeroRecorrido=0;
     string texto;
     int velocidadDeMovimiento=0;
+
+//atributos de movimiento
+    Vector3 m_Movement;
+    Rigidbody m_Rigidbody;
+    Animator m_Animator;
+    [SerializeField]
+    float turnSpeed=20f;
+    Quaternion m_Rotation=Quaternion.identity;
     // Start is called before the first frame update
 
 //Funciones
@@ -30,6 +38,8 @@ public class Player_Character : MonoBehaviour
     }
     void inicializarPersonaje(){
         //vidaPlayer=Propiedades.vida;
+        m_Rigidbody = GetComponent<Rigidbody>();
+        m_Animator  = GetComponent<Animator>();
     }
     void objetoRobado(Sistema_ObjetosARobar objetoRobado){
         if(objetoRobado.valor>0.0){
@@ -44,8 +54,27 @@ public class Player_Character : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        velocidadDeMovimiento=5;
-        this.transform.position = Vector3.MoveTowards(transform.position,recorrido().transform.position,velocidadDeMovimiento);
+    {   //Movimiento Player
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        m_Movement.Set(horizontal,0f, vertical);
+        m_Movement.Normalize();
+
+        bool hasHorizontalInput = !Mathf.Approximately(horizontal,0f);
+        bool hasVerticalInput = !Mathf.Approximately(vertical,0f);
+        
+        //variable Animator
+        bool IsWalking=hasHorizontalInput || hasVerticalInput;
+        
+        m_Animator.SetBool("IsWalking", IsWalking);
+
+        Vector3 desiredForward = Vector3.RotateTowards(transform.forward, m_Movement, turnSpeed * Time.deltaTime,0f);
+        m_Rotation = Quaternion.LookRotation(desiredForward);
+        m_Rigidbody.MovePosition(m_Rigidbody.position+m_Movement*Time.deltaTime);
+        m_Rigidbody.MoveRotation(m_Rotation);
+        //Movimiento automatico
+        //velocidadDeMovimiento=5;
+        //this.transform.position = Vector3.MoveTowards(transform.position,recorrido().transform.position,velocidadDeMovimiento);
     }
 }
