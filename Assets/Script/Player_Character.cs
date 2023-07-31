@@ -11,6 +11,7 @@ public class Player_Character : MonoBehaviour
     public double valorTotalObjetosRobados=0;
     int NumeroRecorrido=0;
     string texto;
+    int velocidadDeMovimiento=0;
     // Start is called before the first frame update
 
 //Funciones
