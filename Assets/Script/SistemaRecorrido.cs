@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SistemaRecorrido : MonoBehaviour
 {
-    public SistemaRecorrido puntoInicial;
     public SistemaRecorrido PuntoFinal;
     // Start is called before the first frame update
     void Start()
