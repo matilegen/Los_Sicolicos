@@ -14,6 +14,10 @@ public class Sistema_Policia : MonoBehaviour
     string texto;
     int velocidadDeMovimiento=1;
 
+
+    float velocidadRotacion=1
+    int tiempoReaccion,movimiento;
+    bool espera, camina, gira;
     //atributos de movimiento
     Vector3 m_Movement;
     Rigidbody m_Rigidbody;
@@ -22,8 +26,18 @@ public class Sistema_Policia : MonoBehaviour
     float turnSpeed=20f;
     Quaternion m_Rotation=Quaternion.identity;
 
+    GameObject target=null;
     //funcion
-
+        void deteccion(){
+            target=gameObject.find("mobs");
+            if(target!=null){
+                espera=true;
+                caminar=false;
+            }else{
+                caminar=true;
+                espera=false;
+            }
+        }
     // Start is called before the first frame update
     void Start()
     {
@@ -34,13 +48,22 @@ public class Sistema_Policia : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_Movement.Set(objetoDestino.transform.position.x,0f, objetoDestino.transform.position.z);
-        m_Movement.Normalize();
-        if(transform.position!=objetoDestino.transform.position){
-            this.transform.position = Vector3.MoveTowards(transform.position,objetoDestino.transform.position,velocidadDeMovimiento*Time.deltaTime);
-        }else{
-            objetoDestino=objetoDestino.PuntoFinal;
+        deteccion();
+        if(espera){
+            GetComponent<Animator>().setBool("Caminar",false);
         }
+        if(camina){
+            GetComponent<Animator>().setBool("Caminar",true);
+             if(transform.position!=objetoDestino.transform.position){
+            this.transform.position = Vector3.MoveTowards(transform.position,objetoDestino.transform.position,velocidadDeMovimiento*Time.deltaTime);
+            }else{
+            objetoDestino=objetoDestino.PuntoFinal;
+            }
+        }
+        if(gira){
+            transform.Rotate(Vector3.up*velocidadRotacion*Time.deltaTime);
+        }
+       
         bool hasHorizontalInput = !Mathf.Approximately(transform.position.x,0f);
         bool hasVerticalInput = !Mathf.Approximately(transform.position.y,0f);
         //Movimiento automatico
