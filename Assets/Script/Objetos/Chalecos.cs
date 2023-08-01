@@ -10,14 +10,14 @@ public class Chalecos : MonoBehaviour
     public double esquivarBalas;
     public double estabilidad;
     public double peso;
-    public double reduccionDeDanio;
+    public double movimientoReducido;
 
     //funciones
     double reduccionDeMovimiento(){
-        return  reduccionDeMovimiento+(peso/2);
+        return  movimientoReducido+(peso/2);
     }
     double defensaTotal(){
-        return defensa+(reduccionDeDanio/2);
+        return defensa+(movimientoReducido/2);
     }
     
 }

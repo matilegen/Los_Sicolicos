@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Audio
   - Guard1
+  - Enemigos
   layers:
   - Default
   - TransparentFX

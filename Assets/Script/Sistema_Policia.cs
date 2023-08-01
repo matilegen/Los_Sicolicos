@@ -10,14 +10,14 @@ public class Sistema_Policia : MonoBehaviour
     public Sistema_Chaleco chaleco=null;
     private double vidaPlayer; 
     public double valorTotalObjetosRobados=0;
-    int NumeroRecorrido=0;
     string texto;
     int velocidadDeMovimiento=1;
 
 
-    float velocidadRotacion=1
+    float velocidadRotacion=1;
     int tiempoReaccion,movimiento;
-    bool espera, camina, gira;
+    bool espera, caminar, gira;
+    GameObject enemigo=null;
     //atributos de movimiento
     Vector3 m_Movement;
     Rigidbody m_Rigidbody;
@@ -29,14 +29,18 @@ public class Sistema_Policia : MonoBehaviour
     GameObject target=null;
     //funcion
         void deteccion(){
-            target=gameObject.find("mobs");
+            buscarPlayer();
             if(target!=null){
                 espera=true;
                 caminar=false;
+                gira=false;
             }else{
                 caminar=true;
                 espera=false;
             }
+        }
+        void buscarPlayer(){
+            enemigo=GameObject.FindWithTag("Player");
         }
     // Start is called before the first frame update
     void Start()
@@ -49,30 +53,34 @@ public class Sistema_Policia : MonoBehaviour
     void Update()
     {
         deteccion();
+        if(enemigo!=null){
         if(espera){
-            GetComponent<Animator>().setBool("Caminar",false);
+            GetComponent<Animator>().SetBool("Caminar",false);
+            espera=false;
+            caminar=true;
+            gira=false;
         }
-        if(camina){
-            GetComponent<Animator>().setBool("Caminar",true);
+        if(caminar){
+            buscarPlayer();
              if(transform.position!=objetoDestino.transform.position){
+            GetComponent<Animator>().SetBool("Caminar",true);
             this.transform.position = Vector3.MoveTowards(transform.position,objetoDestino.transform.position,velocidadDeMovimiento*Time.deltaTime);
+            caminar=false;
             }else{
+            espera=true;
+            caminar=false;
+            gira=true;
             objetoDestino=objetoDestino.PuntoFinal;
             }
         }
         if(gira){
-            transform.Rotate(Vector3.up*velocidadRotacion*Time.deltaTime);
+            transform.Rotate(objetoDestino.transform.position.x*velocidadRotacion*Time.deltaTime,0f,0f);
+            gira=false;
+            espera=true;
+            caminar=false;
         }
-       
-        bool hasHorizontalInput = !Mathf.Approximately(transform.position.x,0f);
-        bool hasVerticalInput = !Mathf.Approximately(transform.position.y,0f);
+        }
         //Movimiento automatico
         velocidadDeMovimiento=5;
-        //variable Animator
-        bool IsWalking=hasHorizontalInput || hasVerticalInput;
-        Vector3 desiredForward = Vector3.RotateTowards(transform.forward, m_Movement, turnSpeed * Time.deltaTime,0f);
-        m_Rotation = Quaternion.LookRotation(desiredForward);
-        m_Rigidbody.MovePosition(m_Rigidbody.position+m_Movement*Time.deltaTime);
-        m_Rigidbody.MoveRotation(m_Rotation);
     }
 }
