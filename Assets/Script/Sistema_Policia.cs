@@ -7,23 +7,24 @@ public class Sistema_Policia : MonoBehaviour
     GameObject ubicacion;
     public SistemaRecorrido objetoDestino;
     public Sistema_Armas arma=null;
-    public Sistema_Chaleco chaleco=null;
+    public Chalecos chaleco=null;
     private double vidaPlayer; 
     public double valorTotalObjetosRobados=0;
     string texto;
-    int velocidadDeMovimiento=1;
+    [SerializeField]
+    public int velocidadDeMovimiento=5;
 
 
     float velocidadRotacion=1;
     int tiempoReaccion,movimiento;
-    bool espera, caminar, gira;
+    bool espera=true, caminar, gira;
     GameObject enemigo=null;
+    public GameObject objetoGuardado=null;
+    bool murio=false;
     //atributos de movimiento
     Vector3 m_Movement;
     Rigidbody m_Rigidbody;
     Animator m_Animator;
-    [SerializeField]
-    float turnSpeed=20f;
     Quaternion m_Rotation=Quaternion.identity;
 
     GameObject target=null;
@@ -54,15 +55,16 @@ public class Sistema_Policia : MonoBehaviour
     {
         deteccion();
         if(enemigo!=null){
-        if(espera){
-            GetComponent<Animator>().SetBool("Caminar",false);
-            espera=false;
-            caminar=true;
-            gira=false;
-        }
+            if(espera){
+              GetComponent<Animator>().SetBool("Caminar",false);
+              espera=false;
+              caminar=true;
+               gira=false;
+               Debug.Log("estoy en espera)");
+            }/*
         if(caminar){
             buscarPlayer();
-             if(transform.position!=objetoDestino.transform.position){
+             if(transform.position!=objetoDestino.posicion()){
             GetComponent<Animator>().SetBool("Caminar",true);
             this.transform.position = Vector3.MoveTowards(transform.position,objetoDestino.transform.position,velocidadDeMovimiento*Time.deltaTime);
             caminar=false;
@@ -78,9 +80,12 @@ public class Sistema_Policia : MonoBehaviour
             gira=false;
             espera=true;
             caminar=false;
+        }*/
         }
-        }
+        /*
         //Movimiento automatico
-        velocidadDeMovimiento=5;
+        if(murio==true){
+            Debug.Log("solto objeto");
+        }*/
     }
 }
