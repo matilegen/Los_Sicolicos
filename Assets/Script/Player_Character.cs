@@ -20,7 +20,7 @@ public class Player_Character : MonoBehaviour
     [SerializeField]
     float turnSpeed=20f;
     Quaternion m_Rotation=Quaternion.identity;
-    // Start is called before the first frame update
+// Start is called before the first frame update
 
 //Funciones
     GameObject recorrido(){
@@ -47,6 +47,40 @@ public class Player_Character : MonoBehaviour
         }
     }
 //llamados y acciones del juego
+
+//accion saltar
+
+//agarrar objeto
+
+//guardar objeto
+
+//abrir inventario
+
+//apuntar
+
+//disparar
+
+//agacharse
+
+//contra la pared
+
+//ponerse una caja
+
+//caminar con la caja
+
+//salir de la caja
+
+//realizar una accion(romper vidrio o abrir caja)
+
+//colocar objeto
+
+//buscar en tacho
+
+//cambiar de arma
+
+//recargar arma
+
+//morir
     void Start()
     {
         inicializarPersonaje();
