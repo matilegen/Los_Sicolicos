@@ -4,7 +4,26 @@ using UnityEngine;
 
 public class Sistema_Policia : MonoBehaviour
 {
-    GameObject ubicacion;
+    public SistemaRecorrido objetoDestino;
+    void movimientoAutomatico(){
+        if(transform.position!=objetoDestino.posicion()){
+        this.transform.position = Vector3.MoveTowards(transform.position,objetoDestino.transform.position,velocidadDeMovimiento*Time.deltaTime);
+        }
+    }
+    void buscarPlayer(){
+            enemigo=GameObject.FindWithTag("Player");
+        }
+    void Start()
+    {
+
+    }
+    void Update()
+    {
+
+        movimientoAutomatico()
+
+    }
+   /* GameObject ubicacion;
     public SistemaRecorrido objetoDestino;
     public Sistema_Armas arma=null;
     public Chalecos chaleco=null;
@@ -80,12 +99,12 @@ public class Sistema_Policia : MonoBehaviour
             gira=false;
             espera=true;
             caminar=false;
-        }*/
+        }
         }
         /*
         //Movimiento automatico
         if(murio==true){
             Debug.Log("solto objeto");
-        }*/
-    }
+        }
+    }*/
 }
