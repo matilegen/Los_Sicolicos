@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 public class Inventario : MonoBehaviour
 {
     public double valor=0.0;
-    // Start is called before the first frame update
+    Sistema_ObjetosARobar[] objetosEnInventario;
     void Start()
     {
         
