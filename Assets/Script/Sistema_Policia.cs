@@ -5,17 +5,39 @@ using UnityEngine;
 public class Sistema_Policia : MonoBehaviour
 {
     public SistemaRecorrido objetoDestino;
-    void movimientoAutomatico(){
-        if(transform.position!=objetoDestino.posicion()){
-        this.transform.position = Vector3.MoveTowards(transform.position,objetoDestino.transform.position,velocidadDeMovimiento*Time.deltaTime);
+
+        //caminar a un punto
+        void movimientoAutomatico(){
+            if(transform.position!=objetoDestino.posicion()){
+            this.transform.position = Vector3.MoveTowards(transform.position,objetoDestino.transform.position,velocidadDeMovimiento*Time.deltaTime);
+            }
         }
-    }
     void buscarPlayer(){
             enemigo=GameObject.FindWithTag("Player");
         }
+        //hablar con otro npc
+
+        //observar
+
+        //funcion de que vio algo a lo lejos
+
+        //funcion de ir a ver lo que vio
+
+        //funcion de desenfundar arma
+
+        //funcion de disparar
+
+        //funcion de morir
+
+        //funcion de guardar arma
+
+        //funcion de agacharce
+
+        
     void Start()
     {
-
+        m_Rigidbody = GetComponent<Rigidbody>();
+        m_Animator  = GetComponent<Animator>();
     }
     void Update()
     {
@@ -65,7 +87,7 @@ public class Sistema_Policia : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-         m_Rigidbody = GetComponent<Rigidbody>();
+        m_Rigidbody = GetComponent<Rigidbody>();
         m_Animator  = GetComponent<Animator>();
     }
 
